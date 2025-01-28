@@ -6,6 +6,7 @@ Date: 1/24/25
 from sys import stdin
 
 MAX = 200
+SIZE_LINE = 50
 
 bit_map = ''
 index = 0
@@ -29,7 +30,7 @@ def md(interval):
 def size(interval):
   return interval[1] - interval[0]
 
-def fi_b(row_interval, col_interval):
+def fi_compress(row_interval, col_interval):
   if size(row_interval) <= 0 or size(col_interval) <= 0:
     ans = []
   elif size(row_interval) == 1 and size(col_interval) == 1:
@@ -38,12 +39,11 @@ def fi_b(row_interval, col_interval):
     ranges_row, ranges_col = quadrants(row_interval, col_interval)
     ans = ['D']
     flag, aux = True, ''
-    
     for row in ranges_row:
       for col in ranges_col:
-        q = fi_b(row, col)
+        q = fi_compress(row, col)
         if len(q) > 0:
-          ans += q
+          ans.extend(q)
           if not aux: 
             aux = q[0]
           if q[0] != aux:
@@ -54,7 +54,7 @@ def fi_b(row_interval, col_interval):
 
   return ans;
 
-def fi_d(row_interval, col_interval):
+def fi_uncompress(row_interval, col_interval):
   global index
   if not (size(row_interval) <= 0 or size(col_interval) <= 0):
     index += 1
@@ -62,7 +62,7 @@ def fi_d(row_interval, col_interval):
       ranges_row, ranges_col = quadrants(row_interval, col_interval)
       for row in ranges_row:
         for col in ranges_col:
-          fi_d(row, col)
+          fi_uncompress(row, col)
     else:
       for i in range(row_interval[0], row_interval[1]):
         for j in range(col_interval[0], col_interval[1]):
@@ -73,30 +73,46 @@ def main():
   global bit_map, index, N, M;
   info = stdin.readline().split();
   while len(info) > 1:
-    T, N, M = info[0], int(info[1]), int(info[2]);
-      
-    print("%c %4d %4d" %(type_bitmap[T], N, M))
+    t, N, M = info[0], int(info[1]), int(info[2]);
+    print("%c %3d %3d" %(type_bitmap[t], N, M))
 
-    if T == 'B':
-      for i in range(N):
-        row = stdin.readline()
-        for j in range(M):
-          matrix[i][j] = int(row[j])
-      ans = fi_b((0, N), (0, M))
-      print(''.join(ans))
+    if t == 'B':
+      n = N * M
+      i = j = k = 0
+      while k < n:
+        row = stdin.readline().strip()
+        for bit in row:
+          matrix[i][j] = bit
+          k += 1; j += 1
+          if j == M:
+            j = 0; i += 1
+      
+      ans = fi_compress((0, N), (0, M))
+
+      i = 0
+      while i < len(ans):
+        print("%c" %(ans[i]), end='')
+        if (i + 1) % SIZE_LINE == 0:
+          print()
+        i += 1
+      if i % SIZE_LINE:
+        print()
+
     else:
       bit_map = stdin.readline().strip()
+
       index = -1
-      fi_d((0, N), (0, M))
+      fi_uncompress((0, N), (0, M))
+
       cnt = 0
       for i in range(N):
         for j in range(M):
           print(matrix[i][j], end='')
-          if cnt == 50:
-            cnt = 0
+          if (cnt + 1) % SIZE_LINE == 0:
             print()
           cnt += 1
-      print()
+      if cnt % SIZE_LINE:
+        print()
 
     info = stdin.readline().split();
 

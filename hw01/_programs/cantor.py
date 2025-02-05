@@ -1,11 +1,11 @@
 """
 File: Cantor Solution
 Author: Juan Diego Collazos
-Date: 1/27/25
+Date: 1/31/25
 """
 from sys import stdin
 
-eps = 1e-6
+eps = 1e-14
 
 def trisection(x, a, b):
   ans = True

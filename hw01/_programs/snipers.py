@@ -25,34 +25,25 @@ def bisection(f, v, a, b):
 def d(a, b):
   return abs(a - b)
 
-def intersection_of_ranges(a, b):
-  aL, aR = a
-  bL, bR = b
-  return max(aL, bL), min(aR, bR)
-
-def is_range_empty(r):
-  return r[0] > r[1]
-
 def is_possible_to_cover(v):
   range_of_execution = []
   for xi, yi in soldiers:
     x_dist = int(sqrt(square_d - d(yi, k - v)**2))
     range_of_execution.append((xi - x_dist, xi + x_dist))
 
-  snipers, index = 0, 1
-  curret = range_of_execution[0]
-  while index < len(range_of_execution):
-    range_exe = range_of_execution[index]
-    curret = intersection_of_ranges(curret, range_exe)
-    if is_range_empty(curret):
-      curret = range_exe
-      snipers += 1
+  count = index = 1
+  current_end = range_of_execution[0][1]
+  while index < N and count <= S:
+    start, end = range_of_execution[index]
+    if start > current_end:
+      count += 1
+      current_end = end
+    else:
+      current_end = min(current_end, end)
     index += 1
+    
+  return count
 
-  if not is_range_empty(curret):
-    snipers += 1
-
-  return snipers
 
 def main():
   global k, N, S, D, soldiers, square_d

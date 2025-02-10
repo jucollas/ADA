@@ -3,12 +3,10 @@ File: Bit Maps Solution
 Author: Juan Diego Collazos
 Date: 1/31/25
 """
-
 from sys import stdin
 
 MAX = 200
 SIZE_LINE = 50
-
 
 bit_map = ''
 index = 0
@@ -37,10 +35,11 @@ def size(interval):
 
 
 def compress(row_interval, col_interval):
-  if size(row_interval) <= 0 or size(col_interval) <= 0:
+  size_row, size_col = size(row_interval), size(col_interval)
+  if size_row <= 0 or size_col <= 0:
     ans = []
-  elif size(row_interval) == 1 and size(col_interval) == 1:
-    ans = [str(get(row_interval[0], col_interval[0]))]
+  elif size_row == 1 and size_col == 1:
+    ans = [get(row_interval[0], col_interval[0])]
   else:
     ranges_row, ranges_col = quadrants(row_interval, col_interval)
     ans = ['D']

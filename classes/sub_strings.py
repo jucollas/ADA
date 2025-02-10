@@ -23,19 +23,4 @@ A = "QWERTVYU"
 B = "ASDFGHJQWERTYU"
 print(fi(0, 0))
 
-'''
-def max_substring(A, B):
-  if len(A) == 0 or len(B) == 0:
-    ans = 0
-  else:
-    if A[0] == B[0]:
-      ans = 1 + max_substring(A[1:], B[1:])
-    else:
-      ans = max(max_substring(A[1:], B), max_substring(A, B[1:]))
-  return ans
-
-A = 'ADARRTQE'
-B = 'ASADARRTQE'
-print(max_substring(A, B))
-'''
 

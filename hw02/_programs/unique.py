@@ -1,3 +1,8 @@
+"""
+File: Unique World Solution
+Author: Juan Diego Collazos
+Date: 2/23/25
+"""
 from sys import stdin
 from collections import deque
 

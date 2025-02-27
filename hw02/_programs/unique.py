@@ -43,7 +43,7 @@ def phi(S):
   for i in range(n):
     val = road[i]
     for s in range(val, S + 1):
-        dp[s] = min(dp[s], 1 + dp[s - val])
+      dp[s] = min(dp[s], 1 + dp[s - val])
   return dp[S]
 
 def read_data():

@@ -1,6 +1,10 @@
+# C++
 *.cpp
+# Test files
 test.in
 test.out
-*.out
 *.txt
+# executables
+a.out
+# styles vscode
 .vscode/

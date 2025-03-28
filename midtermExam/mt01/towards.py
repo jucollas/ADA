@@ -20,10 +20,9 @@ def phi(i, j, acum):
   if key in dp:
     ans = dp[key]
   else:
-    ans = INF
     if i == 0 and j == 0:
       ans = abs(acum)
-    elif acum <= MAX_REMAINIG[i]:
+    else:
       if i > N - 1: 
         sub = [j, j + 1]
       else: 
@@ -33,10 +32,12 @@ def phi(i, j, acum):
         if j < len(board[i]) - 1: 
           sub.append(j)
 
-      for ind in sub:
-        for val in sign:
-          if ans != 0:
-            ans = min(ans, phi(i - 1, ind, acum + val * board[i - 1][ind]))
+      ans = INF
+      if abs(acum) <= MAX_REMAINIG[i]:
+        for ind in sub:
+          for val in sign:
+            if ans != 0:
+              ans = min(ans, phi(i - 1, ind, acum + val * board[i - 1][ind]))
     dp[key] = ans
   return ans
 
